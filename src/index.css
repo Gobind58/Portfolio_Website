@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS — CSS Custom Properties
+   ============================================================ */
+:root {
+    /* Container */
+    --container-max: 1200px;
+    --container-px-xs: 1rem;      /* 16px  — mobile */
+    --container-px-sm: 1.5rem;    /* 24px  — tablet */
+    --container-px-lg: 2rem;      /* 32px  — desktop */
+
+    /* Spacing scale */
+    --space-2:  0.5rem;   /*  8px */
+    --space-3:  0.75rem;  /* 12px */
+    --space-4:  1rem;     /* 16px */
+    --space-6:  1.5rem;   /* 24px */
+    --space-8:  2rem;     /* 32px */
+    --space-12: 3rem;     /* 48px */
+    --space-16: 4rem;     /* 64px */
+    --space-20: 5rem;     /* 80px */
+    --space-24: 6rem;     /* 96px */
+
+    /* Section vertical rhythm */
+    --section-py: var(--space-20);
+
+    /* Typography — fluid clamp() sizes */
+    --text-hero:    clamp(2.75rem, 8vw + 1rem, 7rem);   /* hero h1 */
+    --text-h2:      clamp(2rem,    4vw + 0.5rem, 3.25rem); /* section h2 */
+    --text-h3:      clamp(1.25rem, 2vw + 0.5rem, 1.875rem);
+    --text-body-lg: clamp(1rem,    1.5vw + 0.25rem, 1.125rem);
+
+    /* Radii */
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-base: 300ms ease;
+    --transition-slow: 500ms ease;
+}
+
+/* ============================================================
+   GLOBAL RESET & BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+}
+
+/* Restore cursor on touch/pointer:coarse devices */
+@media (pointer: coarse) {
+    * { cursor: auto !important; }
+}
+
+/* Focus ring for keyboard nav */
+:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.4);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* Smooth transitions on interactive elements */
+a, button {
+    transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+    transition-duration: 200ms;
+    transition-timing-function: ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* offset for fixed navbar */
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+}
+
+/* Prevent any child from causing horizontal overflow */
+#root {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* ============================================================
+   CONTAINER SYSTEM
+   ============================================================ */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-px-xs);
+    padding-right: var(--container-px-xs);
+}
+
+@media (min-width: 640px) {
+    .container {
+        padding-left: var(--container-px-sm);
+        padding-right: var(--container-px-sm);
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding-left: var(--container-px-lg);
+        padding-right: var(--container-px-lg);
+    }
+}
+
+/* ============================================================
+   SECTION PADDING UTILITY
+   ============================================================ */
+.section-py {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+}
+
+@media (min-width: 768px) {
+    .section-py {
+        padding-top: var(--space-20);
+        padding-bottom: var(--space-20);
+    }
+}
+
+@media (min-width: 1024px) {
+    .section-py {
+        padding-top: var(--space-24);
+        padding-bottom: var(--space-24);
+    }
+}
+
+/* ============================================================
+   OVERFLOW PREVENTION
+   ============================================================ */
+
+/* All direct grid/flex children get min-width: 0 to prevent
+   content from blowing out their container */
+.grid > *,
+[class*="grid-cols"] > * {
+    min-width: 0;
+}
+
+/* Sections never cause horizontal scroll */
+section,
+footer,
+nav,
+main {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* Images always stay in bounds */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+/* ============================================================
+   GLASS UTILITIES
+   ============================================================ */
+.glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-dark {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================
+   GRADIENT TEXT
+   ============================================================ */
+.gradient-text {
+    background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================================
+   GLOW EFFECT
+   ============================================================ */
+.glow {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+::selection {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+/* ============================================================
+   TYPOGRAPHY UTILITIES
+   ============================================================ */
+.text-hero {
+    font-size: var(--text-hero);
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
+.text-section-title {
+    font-size: var(--text-h2);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.text-card-title {
+    font-size: var(--text-h3);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.text-body-lg {
+    font-size: var(--text-body-lg);
+    line-height: 1.75;
+}
+
+/* ============================================================
+   SECTION HEADER PATTERN (reusable)
+   ============================================================ */
+.section-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+}
+
+@media (min-width: 768px) {
+    .section-header {
+        margin-bottom: var(--space-16);
+    }
+}
+
+.section-eyebrow {
+    font-size: 0.6875rem;  /* 11px */
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+    display: block;
+}
